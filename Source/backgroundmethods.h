@@ -6,7 +6,7 @@
 class BackgroundMethods
 {
 public:
-    static void Calculations(Abnormal_Payment_Node *_Head, double _Mortgage_Amount, double _Interest, double _Normal_monthly_rate);
+    static void M_Amortization_Calculations(Abnormal_Payment_Node *_Head, double _Mortgage_Amount, double _Interest, double _Normal_monthly_rate);
 
 };
 

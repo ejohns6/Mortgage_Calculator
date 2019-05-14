@@ -35,7 +35,7 @@ QT_CHARTS_USE_NAMESPACE
 int main(int argc, char *argv[])
 {
     QApplication _a(argc, argv);
-    QLineSeries *series = new QLineSeries();
+
 
     //Get the info in
     QFile InputData(QCoreApplication::applicationDirPath() + "/InputData.txt");
@@ -87,33 +87,85 @@ int main(int argc, char *argv[])
     }
     InputData.close();
 
-    BackgroundMethods::Calculations(Head, Mortgage_Amount, Yearly_Interest_Rate, Normal_Monthly_Payment);
+    BackgroundMethods::M_Amortization_Calculations(Head, Mortgage_Amount, Yearly_Interest_Rate, Normal_Monthly_Payment);
 
-
-    QFile DataPoints(QCoreApplication::applicationDirPath() + "/DataPoints.txt");
-    if (!DataPoints.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    //Starts of Modified Balance
+    QFile M_Balance_DataPoints(QCoreApplication::applicationDirPath() + "/M_Balance_DataPoints.txt");
+    if (!M_Balance_DataPoints.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return 1;
     }
 
-    QTextStream streamPoints(&DataPoints);
-    while (!streamPoints.atEnd()) {
-        QString line = streamPoints.readLine();
+
+    QLineSeries *M_Balance_Series = new QLineSeries();
+    M_Balance_Series->setName("Balance");
+    QTextStream M_Balance_streamPoints(&M_Balance_DataPoints);
+    while (!M_Balance_streamPoints.atEnd()) {
+        QString line = M_Balance_streamPoints.readLine();
         if (line.startsWith("#")){
             continue;
         }
         QStringList values = line.split(" ", QString::SkipEmptyParts);
         QDateTime momentInTime;
         momentInTime.setDate(QDate(values[0].toInt(), values[1].toInt() , 1));
-        series->append(momentInTime.toMSecsSinceEpoch(), values[2].toDouble());
+        M_Balance_Series->append(momentInTime.toMSecsSinceEpoch(), values[2].toDouble());
     }
-    InputData.close();
+    M_Balance_DataPoints.close();
+    //End of Modified Balance
+
+    //Starts of Modified Cumulative Interest
+    QFile M_Cumulative_Interest_DataPoints(QCoreApplication::applicationDirPath() + "/M_Cumulative_Interest_DataPoints.txt");
+    if (!M_Cumulative_Interest_DataPoints.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return 1;
+    }
+
+
+    QLineSeries *M_Cumulative_Interest_Series = new QLineSeries();
+    M_Cumulative_Interest_Series->setName("Cumulative Interest");
+    QTextStream M_Cumulative_Interest_streamPoints(&M_Cumulative_Interest_DataPoints);
+    while (!M_Cumulative_Interest_streamPoints.atEnd()) {
+        QString line = M_Cumulative_Interest_streamPoints.readLine();
+        if (line.startsWith("#")){
+            continue;
+        }
+        QStringList values = line.split(" ", QString::SkipEmptyParts);
+        QDateTime momentInTime;
+        momentInTime.setDate(QDate(values[0].toInt(), values[1].toInt() , 1));
+        M_Cumulative_Interest_Series->append(momentInTime.toMSecsSinceEpoch(), values[2].toDouble());
+    }
+    M_Cumulative_Interest_DataPoints.close();
+    //End of Modified Cumulative Interest
+
+    //Starts of Modified Principal Paid
+    QFile M_Principal_Paid_DataPoints(QCoreApplication::applicationDirPath() + "/M_Principal_Paid_DataPoints.txt");
+    if (!M_Principal_Paid_DataPoints.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return 1;
+    }
+
+
+    QLineSeries *M_Principal_Paid_Series = new QLineSeries();
+    M_Principal_Paid_Series->setName("Principal Paid");
+    QTextStream M_Principal_Paid_streamPoints(&M_Principal_Paid_DataPoints);
+    while (!M_Principal_Paid_streamPoints.atEnd()) {
+        QString line = M_Principal_Paid_streamPoints.readLine();
+        if (line.startsWith("#")){
+            continue;
+        }
+        QStringList values = line.split(" ", QString::SkipEmptyParts);
+        QDateTime momentInTime;
+        momentInTime.setDate(QDate(values[0].toInt(), values[1].toInt() , 1));
+        M_Principal_Paid_Series->append(momentInTime.toMSecsSinceEpoch(), values[2].toDouble());
+    }
+    M_Principal_Paid_DataPoints.close();
+    //End of Modified Principal Paid
 
     //![2]
 
     //![3]
     QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->legend()->hide();
+    chart->addSeries(M_Balance_Series);
+    chart->addSeries(M_Cumulative_Interest_Series);
+    chart->addSeries(M_Principal_Paid_Series);
+    //chart->legend()->hide();
     chart->setTitle("Mortgage Amount Over Time");
     //![3]
 
@@ -123,13 +175,18 @@ int main(int argc, char *argv[])
     axisX->setFormat("MMM yyyy");
     axisX->setTitleText("Date");
     chart->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
+    M_Balance_Series->attachAxis(axisX);
+    M_Cumulative_Interest_Series->attachAxis(axisX);
+    M_Principal_Paid_Series->attachAxis(axisX);
 
     QValueAxis *axisY = new QValueAxis;
     axisY->setLabelFormat("%i");
-    axisY->setTitleText("Mortgage Amount($)");
+    axisY->setTitleText("Money Amount($)");
     chart->addAxis(axisY, Qt::AlignLeft);
-    series->attachAxis(axisY);
+    M_Balance_Series->attachAxis(axisY);
+    M_Cumulative_Interest_Series->attachAxis(axisY);
+    M_Principal_Paid_Series->attachAxis(axisY);
+
     //![4]
 
     //![5]

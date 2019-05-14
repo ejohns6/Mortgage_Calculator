@@ -8,12 +8,11 @@ Was Developed using Qt
 
 To deploy:
 1. Have exe complied and txt files
-2. Open console
-3. run
-4. change directory to qt bin folder version that you are using
-5. run qtenv2.bat
-6. run windeployqt.exe
-7. run windeployqt.exe --quick --no-translations
+2. Open console in qt bin folder version that you are using
+3. run qtenv2.bat
+4. run windeployqt.exe
+5. change directory to where the exe compiled file is
+6. run windeployqt.exe --quick --no-translations .
 
 Key Notes:
 -Any line with # will not be read in
