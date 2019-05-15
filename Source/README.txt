@@ -3,7 +3,6 @@ Program where you can see how long it takes to pay of mortage with normal monthl
 payments and abnormal payments here and there
 
 
-
 Was Developed using Qt
 
 To deploy:
@@ -28,7 +27,8 @@ Key Notes:
 - The Dates can be in any order
 - The File must be called "InputData.txt" in the directory
 
-
+To-Do:
+-Make Everything OO bc of speed and easy for user
 
 
 Under this is an example Templete
