@@ -1,0 +1,15 @@
+# Mortgage Amount($):
+200000.32
+# Yearly Interest Rate(%):
+3.2
+# Normal Monthly Payment:
+2123.00
+# Abnorrmal Payments(Seperated by One Space):
+# Year Month Amount
+#----------------------------------------------------
+2020 10 5000
+2021 01 2000
+2022 03 20000
+2020 03 2000
+2020 03 6000
+1999 01 10000
