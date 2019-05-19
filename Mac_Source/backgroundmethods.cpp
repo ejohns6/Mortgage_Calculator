@@ -93,7 +93,7 @@ Time_And_Date_Table* BackgroundMethods::M_Amortization_Calculations(Abnormal_Pay
         _current_Mortage_Amount += Monthly_Interest;
 
         if(Abnormal_Payment + _Normal_monthly_rate <= _current_Mortage_Amount){
-            _current_Mortage_Amount -= (_Normal_monthly_rate + Abnormal_Payment) - Monthly_Interest;
+            _current_Mortage_Amount -= (_Normal_monthly_rate + Abnormal_Payment);
             if(_Normal_monthly_rate + Abnormal_Payment - Monthly_Interest > 0){
 
                 _Cumulative_Interest_Amount += Monthly_Interest;
@@ -109,7 +109,7 @@ Time_And_Date_Table* BackgroundMethods::M_Amortization_Calculations(Abnormal_Pay
 
 
         }else{
-            _Principal_Paid_Amount += _current_Mortage_Amount - Monthly_Interest;
+            _Principal_Paid_Amount += _current_Mortage_Amount;
 
             _Cumulative_Interest_Amount += Monthly_Interest;
 
@@ -163,7 +163,7 @@ Time_And_Date_Table* BackgroundMethods::NM_Amortization_Calculations(double _Mor
         _current_Mortage_Amount += Monthly_Interest;
 
         if(_Normal_monthly_rate <= _current_Mortage_Amount){
-            _current_Mortage_Amount -= (_Normal_monthly_rate) - Monthly_Interest;
+            _current_Mortage_Amount -= (_Normal_monthly_rate);
             if(_Normal_monthly_rate - Monthly_Interest > 0){
 
                 _Cumulative_Interest_Amount += Monthly_Interest;
@@ -179,7 +179,7 @@ Time_And_Date_Table* BackgroundMethods::NM_Amortization_Calculations(double _Mor
 
 
         }else{
-            _Principal_Paid_Amount += _current_Mortage_Amount - Monthly_Interest;
+            _Principal_Paid_Amount += _current_Mortage_Amount;
 
             _Cumulative_Interest_Amount += Monthly_Interest;
 

@@ -1,9 +1,9 @@
 # Mortgage Amount($):
-200000.32
+416999
 # Yearly Interest Rate(%):
-3.2
+3.75
 # Normal Monthly Payment:
-2123.00
+1931.19
 # Abnorrmal Payments(Seperated by One Space):
 # Year Month Amount
 #----------------------------------------------------
