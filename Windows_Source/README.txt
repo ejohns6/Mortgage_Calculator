@@ -4,7 +4,7 @@ payments and abnormal payments here and there
 
 Important Note: Qt is write code once and compile on every system. So if you want to
     have an mac OS version then compile on a mac OS or a VM of it
-   
+
 
 
 Was Developed using Qt
